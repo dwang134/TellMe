@@ -1,11 +1,29 @@
 //componets
 import Labels from './Labels'
-
 //third-party
 import {Doughnut} from 'react-chartjs-2'
 import {Chart, ArcElement} from 'chart.js'
 import {config} from '../data/data'
 Chart.register(ArcElement);
+
+
+const expenseCategory = [
+  {
+      type: 'Savings',
+      color: 'rgb(255, 99, 132)',
+      percent: 45
+  },
+  {
+      type: 'Investment',
+      color: 'rgb(54, 162, 235)',
+      percent: 20
+  },
+  {
+      type: 'Expense',
+      color: 'rgb(255, 205, 86)',
+      percent: 10
+  },
+]
 
 const Graph = () => {
     // console.log(data);
@@ -22,7 +40,7 @@ const Graph = () => {
           </div>
         </div>
         <div className="flex flex-col py-10 gap-4">
-          <Labels></Labels>
+          {expenseCategory.map((category)=> <Labels key= {expenseCategory.type} category= {category}></Labels>)}
         </div>
       </div>
     </div>
