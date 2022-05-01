@@ -1,11 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Layout from '../components/Layout'
+import Graph from '../components/Graph'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      
+    <Layout>
+    <h1 className= 'text-4xl font-bold text-center py-10'>TellMe</h1>
+    <div className= 'grid xs:grid-cols-2 gap-4'>
+    <Graph></Graph>
     </div>
+    </Layout> 
   )
 }
