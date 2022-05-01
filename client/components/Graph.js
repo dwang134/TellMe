@@ -28,19 +28,21 @@ const expenseCategory = [
 const Graph = () => {
     // console.log(data);
   return (
-    <div className="flex justify-content mx-auto bg-blue-300">
-      <div className="item">
-        <div className="relative">
-          <Doughnut {...config}></Doughnut>
-          <div className="absolute top-1/3 right-0 bottom-0 left-0 mx-auto">
-            <p className="font-bold text-lg text-white text-center pt-5">
-              Total
-            </p>
-            <p className="block text-3xl text-emerald-400 text-center">${0}</p>
+    <div className= 'grid xs:grid-cols-2 gap-4'>
+      <div className="flex justify-content mx-auto bg-blue-300">
+        <div className="item">
+          <div className="relative">
+            <Doughnut {...config}></Doughnut>
+            <div className="absolute top-1/3 right-0 bottom-0 left-0 mx-auto">
+              <p className="font-bold text-lg text-white text-center pt-5">
+                Total
+              </p>
+              <p className="block text-3xl text-emerald-400 text-center">${0}</p>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col py-10 gap-4">
-          {expenseCategory.map((category)=> <Labels key= {expenseCategory.type} category= {category}></Labels>)}
+          <div className="flex flex-col py-10 gap-4">
+            {expenseCategory.map((category)=> <Labels key= {expenseCategory.type} category= {category}></Labels>)}
+          </div>
         </div>
       </div>
     </div>
