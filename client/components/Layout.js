@@ -13,7 +13,11 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className="container mx-auto">{children}</main>
+      <main className= 'container mx-auto'>
+        <div className= 'grid md:grid-cols-2'>
+        {children}
+        </div>
+      </main>
       <Footer />
     </>
   );

@@ -28,7 +28,6 @@ const expenseCategory = [
 const Graph = () => {
     // console.log(data);
   return (
-    <div className= 'grid xs:grid-cols-2 gap-4'>
       <div className="flex justify-content mx-auto bg-blue-300">
         <div className="item">
           <div className="relative">
@@ -45,7 +44,6 @@ const Graph = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
