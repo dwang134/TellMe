@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Layout>
     <Graph></Graph>
-
+    <Form></Form>
     </Layout> 
   )
 }
