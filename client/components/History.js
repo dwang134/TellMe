@@ -1,7 +1,7 @@
 import React from 'react'
+import {BiTrash} from 'react-icons/bi'
 
 const History = ({transactions}) => {
-
   const expenseCategory = [
     {
         type: 'Savings',
@@ -23,7 +23,6 @@ const History = ({transactions}) => {
   const colorCategory = (category) => {
 
     let color = ''
-    console.log(category);
     switch (category){
       case 'Investment':
         color = 'rgb(255, 99, 132)';
@@ -38,19 +37,32 @@ const History = ({transactions}) => {
     return color;
   }
 
+  const handleDelete = () => {
+  }
+
   return (
     <div className='flex flex-col'>
-    <h1 className= 'py-4 text-md font-bold text-lg text-center'>History</h1>
+    <h1 className= 'py-4 font-bold text-lg text-center'>History</h1>
     <div className= 'grid gap-4'>
-    {transactions.map((transaction, index)=> 
-      <div key= {index} className= 'flex justify-center h-8 border-r-8 rounded-md bg-white drop-shadow-md' style= {{borderColor: colorCategory(transaction.category)}} >
-      <button className='px-3'>icon</button>
-      <div className= 'block w-full'>{transaction.desc}</div>
+    {
+      (transactions=== undefined || transactions.length == 0) ? <h1 className= 'text-md text-center text-black'>No history</h1> :
+      transactions.map((transaction, index)=> 
+      <div key= {index} className= 'flex justify-center items-center h-8 rounded-md bg-white drop-shadow-md'>
+      <button className='w-3/12 px-3' onClick= {handleDelete}><BiTrash style= {{color: colorCategory(transaction.category), fontSize: 'large' }}></BiTrash></button>
+      <div className= 'w-full h-fit bg-blue-200 text-center'>{transaction.desc}</div>
+      <div className= 'w-3/12 h-8 border-r-8 rounded' style= {{borderColor: colorCategory(transaction.category)}}></div>
       </div>
     )}    
     </div>
     </div>
   )
 }
+
+//error handle --> this is why ts is useful
+// History.propTypes= {
+//   desc: PropTypes.string,
+//   category: PropTypes.string,
+//   amount: PropTypes.number,
+// }
 
 export default History

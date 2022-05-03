@@ -28,7 +28,7 @@ const expenseCategory = [
 const Graph = () => {
     // console.log(data);
   return (
-      <div className="flex justify-center items-center mx-auto bg-blue-300 w-96">
+      <div className="flex justify-center items-center mx-auto bg-blue-300 w-11/12">
         <div className="item">
           <div className="relative">
             <Doughnut {...config}></Doughnut>

@@ -1,5 +1,5 @@
-import {useState} from 'react'
-import List from './History'
+import {useEffect, useState} from 'react'
+import History from './History'
 
 const Form = () => {
 
@@ -16,18 +16,18 @@ const Form = () => {
       alert('Please fill out all fields');
       return;
     }
-    else if(!category){
-      setCategory('Investment');
-    }
     const newTransaction = {ID, desc, category, amount};
     setTransactions([...transactions, newTransaction]);
     setID(ID+1);
   }
 
+  useEffect(() => {
+    setCategory(category=> category='Investment');
+  }, []);
 
   return (
-    <div className= 'w-96 bg-slate-300 p-5 mx-auto '>
-    <div className= 'text-lg font-bold pb-4 text-center'>Transaction</div>
+    <div className= 'w-11/12 bg-slate-300 p-5 mx-auto '>
+    <h1 className= 'py-4 font-bold text-xl text-center'>Transaction</h1>
     <form id= 'form' onSubmit= {handleSubmit}>
       <div className= 'grid gap-4'>
       <input type= 'text' placeholder= 'Enter a transaction here' className= 'drop-shadow-md rounded-md h-8 px-2 py-4' onChange= {(e)=> setDesc(e.target.value)} ></input>
@@ -40,9 +40,10 @@ const Form = () => {
       <button type= 'submit' className= 'drop-shadow-md bg-indigo-500 rounded-sm text-white font-semibold py-2'>Make transaction</button>
       </div>
     </form>
-    <List transactions= {transactions}></List>
+    <History transactions= {transactions}></History>
     </div>
   )
 }
+
 
 export default Form
