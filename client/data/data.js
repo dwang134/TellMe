@@ -30,7 +30,9 @@ export const config = {
       ],
       hoverOffset: 4,
       borderRadius: 20,
-      spacing: 10
+      spacing: 10,
+      borderWidth: 2,
+      boxShadow: 10
     }]
   },
   options: {

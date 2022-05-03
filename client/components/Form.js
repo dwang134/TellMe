@@ -26,7 +26,7 @@ const Form = () => {
   }, []);
 
   return (
-    <div className= 'w-11/12 bg-slate-300 p-5 mx-auto '>
+    <div className= 'flex flex-col w-11/12 bg-slate-300 p-5 mx-auto gap-y-5'>
     <h1 className= 'py-4 font-bold text-xl text-center'>Transaction</h1>
     <form id= 'form' onSubmit= {handleSubmit}>
       <div className= 'grid gap-4'>
