@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import List from './History'
 
 const Form = () => {
 
@@ -6,28 +7,26 @@ const Form = () => {
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState(0);
   const [ID, setID]= useState(0);
-  const [transactions, setTransactions] = ([]);
+  const [transactions, setTransactions] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if(!desc || !amount ){
       alert('Please fill out all fields');
+      return;
     }
-    else if(desc && amount && !category){
+    else if(!category){
       setCategory('Investment');
     }
-  
     const newTransaction = {ID, desc, category, amount};
-    console.log(newTransaction);
-    // setTransactions([...transactions, newTransaction]);
-    // setID(ID+1);
-    // console.log(transactions);
+    setTransactions([...transactions, newTransaction]);
+    setID(ID+1);
   }
 
 
   return (
-    <div className= 'w-96 bg-slate-300 p-5 mx-auto'>
+    <div className= 'w-96 bg-slate-300 p-5 mx-auto '>
     <div className= 'text-lg font-bold pb-4 text-center'>Transaction</div>
     <form id= 'form' onSubmit= {handleSubmit}>
       <div className= 'grid gap-4'>
@@ -41,6 +40,7 @@ const Form = () => {
       <button type= 'submit' className= 'drop-shadow-md bg-indigo-500 rounded-sm text-white font-semibold py-2'>Make transaction</button>
       </div>
     </form>
+    <List transactions= {transactions}></List>
     </div>
   )
 }

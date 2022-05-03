@@ -36,11 +36,11 @@ const Graph = () => {
               <p className="font-bold text-lg text-white text-center pt-5">
                 Total
               </p>
-              <p className="block text-3xl text-emerald-400 text-center">${0}</p>
+              <p className="block text-3xl text-emerald-500 text-center">${0}</p>
             </div>
           </div>
           <div className="flex flex-col py-10 gap-4">
-            {expenseCategory.map((category)=> <Labels key= {expenseCategory.type} category= {category}></Labels>)}
+            {expenseCategory.map((category, index)=> <Labels key= {index} category= {category}></Labels>)}
           </div>
         </div>
       </div>
