@@ -3,7 +3,11 @@ const router = require('express').Router();
 // const router = express.Router();
 const controller = require('../controller/controller')
 
-// routes.route('/api/categories').get((req, res)=> res.json('GET request from categories'));
-router.get('/api/categories', controller.createCategories);
+//refractor
+//categories
+router.route('/api/categories').get(controller.getCategories).post(controller.createCategories);
+
+//transactions
+router.route('/api/transaction').get(controller.getTransactions).post(controller.createTransaction).delete(controller.deleteTransaction);
 
 module.exports = router;
