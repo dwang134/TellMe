@@ -9,7 +9,7 @@ const Labels = ({category}) => {
             <div className= 'w-2 h-2 rounded py-3' style= {{background: category.color ?? 'rgb(255, 99, 132)'}}></div>
             <div className= 'text-md text-black'>{category.type ?? ""}</div>
             </div>
-            <h3>{category.percent ?? 0}%</h3>
+            <h3 className= 'font-semibold text-md'>{category.percent ?? 0}%</h3>
         </div>
     </div>
   )

@@ -13,7 +13,7 @@ export default function Layout({ children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className= 'container mx-auto py-12'>
+      <main className= 'container mx-auto py-8'>
         <div className= 'grid md:grid-cols-2 bg-slate-700 gap-20'>
         {children}
         </div>
