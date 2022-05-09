@@ -2,13 +2,13 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
     categories: [],
-    transaction: []
+    transactions: []
 }
 
 export const expenseSlice = createSlice({
     name: 'expense',
     initialState,
-    reducer: {
+    reducers: {
      getTransactions: (state) => {
 
      }       
