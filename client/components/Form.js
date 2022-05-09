@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react'
 import History from './History'
+import {expenseApi} from '../store/expenseApi'
 
 const Form = () => {
 
@@ -7,7 +8,7 @@ const Form = () => {
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState(0);
   const [ID, setID]= useState(0);
-  const [transactions, setTransactions] = useState([]);
+  // const [transactions, setTransactions] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,10 +21,21 @@ const Form = () => {
     setTransactions([...transactions, newTransaction]);
     setID(ID+1);
   }
+  
+  const {data, isLoading, isSuccess, isError} = expenseApi.useGetLabelsQuery();
+  let Transactions;
 
-  useEffect(() => {
-    setCategory(category=> category='Investment');
-  }, []);
+  if (isLoading){
+    Transactions = `<h1>Data is Fetching...</h1>`
+  }else if(isSuccess){
+    Transactions = <History transactions= {data}/>
+  }else if(isError){
+    Transactions = `<h1>Error fetching from the API endpoint</h1>`
+  }
+
+  // useEffect(() => {
+  //   setCategory(category=> category='Investment');
+  // }, []);
 
   return (
     <div className= 'flex flex-col w-11/12 bg-slate-300 p-5 mx-auto gap-y-5'>
@@ -40,7 +52,7 @@ const Form = () => {
       <button type= 'submit' className= 'drop-shadow-md bg-indigo-500 rounded-sm text-white font-semibold py-2'>Make transaction</button>
       </div>
     </form>
-    <History transactions= {transactions}></History>
+    {Transactions}
     </div>
   )
 }

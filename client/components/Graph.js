@@ -6,29 +6,11 @@ import {Chart, ArcElement} from 'chart.js'
 import {config} from '../data/data'
 Chart.register(ArcElement);
 // import {getExpense} from '../store/expenseApi'
-import {useGetLabelsQuery} from '../store/expenseApi'
-
-// const expenseCategory = [
-//   {
-//       type: 'Savings',
-//       color: 'rgb(255, 99, 132)',
-//       percent: 45
-//   },
-//   {
-//       type: 'Investment',
-//       color: 'rgb(54, 162, 235)',
-//       percent: 20
-//   },
-//   {
-//       type: 'Expense',
-//       color: 'rgb(255, 205, 86)',
-//       percent: 10
-//   },
-// ]
+import {expenseApi} from '../store/expenseApi'
 
 const Graph = () => {
     // console.log(data);
-    const {data, isLoading, isSuccess, isError} = useGetLabelsQuery();
+    const {data, isLoading, isSuccess, isError} = expenseApi.useGetLabelsQuery();
     let Transactions;
 
     if (isLoading){

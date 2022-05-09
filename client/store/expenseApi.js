@@ -36,4 +36,4 @@ export const expenseApi = createApi({
 })
 
 // export const {getExpense}= expenseApi;
-export const {useGetLabelsQuery} = expenseApi;
+// export const {useGetLabelsQuery} = expenseApi;
