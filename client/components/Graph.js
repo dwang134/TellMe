@@ -30,7 +30,7 @@ const Graph = () => {
           <div className="relative">
             <Doughnut {...chartData(data)}></Doughnut>
             <div className="absolute top-1/3 right-0 bottom-0 left-0 mx-auto">
-              <p className="font-bold text-lg text-white text-center pt-5">
+              <p className="ml-2 font-bold text-xl text-black text-center pt-5">
                 Total
               </p>
               <p className="block text-3xl text-emerald-500 text-center">${getTotal(data)}</p>
