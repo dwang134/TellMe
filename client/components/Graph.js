@@ -25,7 +25,7 @@ const Graph = () => {
     }
 
   return (
-      <div className="flex justify-center items-center mx-auto bg-blue-300 w-11/12 p-10">
+      <div className="flex justify-center items-center mx-auto w-11/12 p-10">
         <div className="item">
           <div className="relative">
             <Doughnut {...chartData(data)}></Doughnut>

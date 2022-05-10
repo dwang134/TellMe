@@ -21,7 +21,7 @@ const History = ({transactions}) => {
       transactions.map((transaction, index)=> 
       <div key= {index} className= 'flex justify-center items-center h-8 rounded-md bg-white drop-shadow-md'>
       <BiTrash data-id= {transaction.id} className='w-2/12 px-3 text-lg' onClick= {handleDelete} style= {{color: transaction.color}}></BiTrash>
-      <div className= 'w-full h-fit bg-blue-200 text-center'>{transaction.desc}</div>
+      <div className= 'w-full h-fit  text-center'>{transaction.desc}</div>
       <div className= 'w-2/12 h-8 border-r-8 rounded' style= {{borderColor: transaction.color}}></div>
       </div>
     )}    
