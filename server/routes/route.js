@@ -17,5 +17,8 @@ router.route('/api/transaction').get(controller.getTransactions).post(controller
 //merged collection
 router.route('/api/labels').get(controller.getLabels);
 
+//User routes
+router.route('/api/users').get(controller.getUsers).post(controller.createUser);
+
 
 module.exports = router;

@@ -4,13 +4,17 @@ const model = require('../models/model')
 const getCategories= async (req, res) => {
     const data = await model.Categories.find({})
     const filterData = await data.map((exp)=> Object.assign({}, {type: exp.type, color: exp.color}));
-    return res.json(filterData);
+    res.json(filterData);
 }
 
 const getTransactions = async (req, res)=> {
     const data = await model.Transaction.find({})
     // const filterData = await data.map((transaction)=> Object.assign({}, {desc: transaction.desc, transaction: transaction.type, amount: transaction.amount, date: transaction.date}));
-    return res.json(data);
+    res.json(data);
+}
+
+const getUsers= async (req, res)=> {
+  res.json({message: 'Get all users'});
 }
 
 //PUT
@@ -44,6 +48,10 @@ const createTransaction= async (req, res)=> {
         if (!err) return res.json(newTransaction);
         return res.status(400).json({message: `${err}`});
     })
+}
+
+const createUser = async(req, res)=> {
+  res.json({message: 'user created'});
 }
 
 //DELETE
@@ -84,8 +92,11 @@ const getLabels = async (req, res) => {
 module.exports = {
     createCategories,
     getCategories,
+    getUsers,
     createTransaction,
     getTransactions,
     deleteTransaction,
-    getLabels
+    getLabels,
+    createUser,
+
 }
