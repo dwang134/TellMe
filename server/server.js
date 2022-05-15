@@ -1,27 +1,22 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 //middleware
-app.use(cors());
+//not block incoming api call and send it to backend
+app.use(cors({
+    origin: 'https://tell-me-frontend.vercel.app'
+}));
 app.use(express.json());
 
 //using routes
 app.use(require('./routes/route'));
 
 //database connection
-const db = require('./db/connection.js');
+mongoose.connect(process.env.ATLAS_URI).catch(err=> {console.log(err)});
 
-db.then(connection=> {  
-    if (!connection) return process.exit;
-
-    //listen to http server 
-    app.listen(process.env.PORT || 4000, ()=> {
-        console.log('Server is listening...');
-    })
-
-}).catch(err=> {throw err});
-
-
-
+app.listen(process.env.PORT || 4000, ()=> {
+    console.log('Server is listening...');
+})

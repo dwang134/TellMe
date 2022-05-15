@@ -47,12 +47,38 @@ const createTransaction= async (req, res)=> {
 }
 
 //DELETE
-const deleteTransaction = async(req, res) => {
-    if (!req.body)res.status(400).json({message: 'Request body not found'});
+const deleteTransaction = async(req, res) => {  
+
+    if (!req.body) res.status(400).json({message: 'Request body not found'});
+
     await model.Transaction.deleteOne(req.body, (err)=> {
-        if (!err)res.json(`${req.body.id} deleted`);
+        if (!err) res.json(`${req.body._id} deleted`);
     }).clone().catch((err)=> {res.json('Error deleting transaction record')})
-}   
+}  
+
+//merging both documents
+const getLabels = async (req, res) => {
+   model.Transaction.aggregate([
+     {
+       $lookup: {
+         from: "categories",
+         localField: "type",
+         foreignField: "type",
+         as: "categoriesInfo",
+       },
+     },
+     {
+       $unwind: "$categoriesInfo",
+     },
+   ])
+     .then((data) => {
+        const filterData= data.map((exp)=> Object.assign({}, {id: exp._id, desc: exp.desc, type: exp.type, amount: exp.amount, color: exp.categoriesInfo["color"]}));
+        res.json(filterData)})
+     .catch((err) => {
+       res.status(400).json("Collection error");
+       throw (err);
+     });
+}
 
 
 module.exports = {
@@ -60,5 +86,6 @@ module.exports = {
     getCategories,
     createTransaction,
     getTransactions,
-    deleteTransaction
+    deleteTransaction,
+    getLabels
 }
