@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       </Head>
       <Navbar />
       <main className= 'container mx-auto py-8'>
-        <div className= 'grid md:grid-cols-2 gap-20'>
+        <div className= 'grid md:grid-cols-2 gap-20 m-auto'>
         {children}
         </div>
       </main>

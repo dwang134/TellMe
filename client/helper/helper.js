@@ -40,10 +40,8 @@ export const chartData = (transactions, customConfig) => {
           data: dataTotals,
           backgroundColor: bgColor,
           hoverOffset: 4,
-          borderRadius: 20,
-          spacing: 10,
-          borderWidth: 2,
-          boxShadow: 10
+          borderRadius: 5,
+
         }]
       },
       options: {

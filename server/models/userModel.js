@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const user_model = new Schema({
     name: {type: String, required: [true, 'Please add a name']},

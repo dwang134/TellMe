@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const expenseApi = createApi({
-    baseQuery: fetchBaseQuery({baseUrl: 'https://tellme-mongodb.herokuapp.com'}),
+    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:4000'}),
     tagTypes: ['categories', 'transactions'],
     endpoints: (builder)=> ({
 

@@ -6,9 +6,8 @@ require('dotenv').config();
 
 //middleware
 //not block incoming api call and send it to backend
-app.use(cors({
-    origin: 'https://tell-me-frontend.vercel.app'
-}));
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //using routes
