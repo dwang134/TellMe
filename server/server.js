@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const {errorHandler} = require('./middleware/errorMiddleware');
 
 //middleware
 //not block incoming api call and send it to backend
@@ -12,6 +13,7 @@ app.use(express.json());
 
 //using routes
 app.use(require('./routes/route'));
+app.use(errorHandler);
 
 //database connection
 mongoose.connect(process.env.ATLAS_URI).catch(err=> {console.log(err)});

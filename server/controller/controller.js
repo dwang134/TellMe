@@ -4,6 +4,7 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
+const { rest } = require('lodash')
 
 //@route: GET /api/categories
 const getCategories= asyncHandler(async (req, res) => {
@@ -25,31 +26,65 @@ const createCategories= asyncHandler(async (req,res) => {
   })
 })
 
-//@route: GET /api/transaction
+//@access: private
+//@route: GET /api/transactions
 const getTransactions = asyncHandler(async (req, res)=> {
-    const data = await Transaction.find({})
+    const data = await Transaction.find({user: req.user.id})
     res.json(data);
 })
 
+//@access: private
 //@route: POST /api/transactons
-const createTransaction= async (req, res)=> {
-  if (!req.body) res.json('Invalid object');
-  const {desc, type, amount, user} = req.body;
+const createTransaction= asyncHandler(async (req, res)=> {
+
+  const {desc, type, amount} = req.body;
+ 
+  if (!req.body){
+    res.status(400)
+    throw new Error('Invalid object body');
+  }
+
+  const newTransaction = await Transaction.create({
+    user: req.user.id,
+    desc,
+    type,
+    amount,
+    date: new Date()
+  })
+
+   //successfully created
+   if (newTransaction){
+    res.status(201).json({
+      user: newTransaction.user,
+      desc: newTransaction.desc,
+      type: newTransaction.type,
+      amount: newTransaction.amount,
+      date: newTransaction.date
+    })
+  }else{
+    res.status(400)
+    throw new Error('Transaction cannot be created');
+  }
   
-  const newTransaction = await new Transaction({
-      desc,
-      type,
-      amount,
-      user,
-      date: new Date()
-  })
+  //you have to assign user
+  // const {desc, type, amount, user} = req.body;
+  
+  // const newTransaction = await new Transaction({
+  //     desc,
+  //     type,
+  //     amount,
+  //     user,
+  //     date: new Date()
+  // })
 
-  newTransaction.save((err)=> {
-      if (!err) return res.json(newTransaction);
-      return res.status(400).json({message: `${err}`});
-  })
-}
+  // newTransaction.save((err)=> {
+  //     if (!err) return res.json(newTransaction);
+  //     return res.status(400).json({message: `${err}`});
+  // })
+  
+})
 
+//@access: private
 //@route: DELETE /api/transactions
 const deleteTransaction = asyncHandler(async(req, res) => {  
 
@@ -60,8 +95,11 @@ const deleteTransaction = asyncHandler(async(req, res) => {
   }).clone()
 })
 
+//@access: private
 //merging both documents @route: GET /api/labels
 const getLabels = asyncHandler(async (req, res) => {
+
+  //this is joining all the transaction and category document
   const data = await Transaction.aggregate([
     {
       $lookup: {
@@ -81,17 +119,26 @@ const getLabels = asyncHandler(async (req, res) => {
 })
 
 //@route: GET /api/users
-const getUsers= asyncHandler(async (req, res)=> {
-  res.json({message: 'Get all users'});
+const getUsers= asyncHandler(async(req, res)=> {
+  const data= await User.find({});
+  res.json(data);
 })
 
 //@route: GET/api/users/me
+//@access: Protected private
 const getCurrentUser = asyncHandler(async (req,res)=> {
-  res.json({message: 'current user data fetched'});
+  const {_id, name, email} = await User.findById(req.user.id)
+
+  res.status(200).json({
+    id: _id,
+    name,
+    email
+  })
+
 })
 
 //@route: POST /api/users
-const registerUser = asyncHandler(async(req, res)=> {
+const registerUser = asyncHandler(async (req, res)=> {
   const {name, email, password} = req.body;
 
   if (!name || !email || !password){
@@ -99,7 +146,7 @@ const registerUser = asyncHandler(async(req, res)=> {
     throw new Error('Please add all fields')
   }
 
-  //check if user exists
+  //check if user already exists
   const userExists = await User.findOne({email})
   if (userExists){
     res.status(400);
@@ -117,11 +164,13 @@ const registerUser = asyncHandler(async(req, res)=> {
     password: hashPassword
   })
 
+  //successfully created
   if (user){
     res.status(201).json({
       _id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      token: generateToken(user._id)
     })
   }else{
     res.status(400)
@@ -131,8 +180,33 @@ const registerUser = asyncHandler(async(req, res)=> {
 })
 
 //@route: POST /api/users/login authenticate user login 
-const loginUser = (req, res)=> {
-  res.json({message: 'Login User'});
+const loginUser = asyncHandler(async(req, res)=> {
+  const {email, password} = req.body;
+  console.log(email+ '\n' + password);
+
+  //check if user email exists
+  const user = await User.findOne({email})
+
+  if(user && await bcrypt.compare(password, user.password)){
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.id),
+      message: `${user.name} logged in `
+    })
+  }else{
+    res.status(400)
+    throw new Error('Invalid credentials');
+  }
+
+})
+
+//generate JWT 
+const generateToken = (id) => {
+  return jwt.sign({id}, process.env.JWT_SECRET, {
+    expiresIn: '30d'
+  })
 }
 
 
