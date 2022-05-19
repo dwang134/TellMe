@@ -4,7 +4,7 @@ const register = () => {
   return (
     <Layout>
       <div class="flex items-center justify-center py-10">
-    <div class="px-8 py-6 mx-4 mt-4 text-left bg-white drop-shadow-xl md:w-1/3 lg:w-1/3 sm:w-1/3">
+    <div class="px-8 py-6 mx-4 mt-4 text-left drop-shadow-md md:w-1/3 lg:w-1/3 sm:w-1/3">
         <div class="flex justify-center">
         <img
               class="mx-auto h-12 w-auto"
@@ -12,7 +12,7 @@ const register = () => {
               alt="Workflow"
             />
         </div>
-        <h3 class="text-2xl font-extrabold text-center pt-6 cursor-default">Create Account</h3>
+        <h3 class="text-3xl font-extrabold text-center pt-6 cursor-default">Create Account</h3>
         <form action="">
             <div class="mt-4">
                 <div class="mt-4">
@@ -36,9 +36,9 @@ const register = () => {
                         Account</button>
                 </div>
                 <div class="mt-6 text-grey-dark">
-                    Already have an account?
+                    Already have an account?{" "}
                     <a class="text-blue-600 hover:underline" href="#">
-                        {" "}Log in
+                    Log in
                     </a>
                 </div>
             </div>
