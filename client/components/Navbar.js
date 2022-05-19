@@ -1,7 +1,20 @@
+import Link from 'next/link'
 
 const Navbar = () => {
   return (
-    <h1 className= 'text-4xl font-bold text-center py-6 mt-6 bg-violet-900 text-white w-10/12 m-auto italic rounded-md'>TellMe</h1>
+    <header className= 'flex justify-center justify-between border-b-4 p-6 border-stone-400'>
+    <div className= 'hover:text-slate-400'>
+      <Link href= '/'><a>TM</a></Link>
+    </div>
+    <ul className= 'flex justify-center gap-x-6'>
+    <li className= 'hover:text-slate-400'>
+    <Link href= '/login'><a>Login</a></Link>
+    </li>
+    <li className= 'hover:text-slate-400'>
+    <Link href= '/register'><a>Register</a></Link>  
+    </li>
+    </ul>
+    </header>
   )
 }
 

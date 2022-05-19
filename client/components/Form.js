@@ -40,7 +40,7 @@ const Form = () => {
   }, []);
 
   return (
-    <div className= 'flex flex-col w-11/12 p-5 mx-auto gap-y-5'>
+    <div className= 'flex flex-col justify-center w-11/12 pb-20 mx-auto '>
     <h1 className= 'py-4 font-bold text-xl text-center'>Transaction</h1>
     <form id= 'form' onSubmit= {handleSubmit}>
       <div className= 'grid gap-4'>

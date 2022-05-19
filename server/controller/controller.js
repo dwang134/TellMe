@@ -4,7 +4,6 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
-const { rest } = require('lodash')
 
 //@route: GET /api/categories
 const getCategories= asyncHandler(async (req, res) => {
@@ -30,26 +29,32 @@ const createCategories= asyncHandler(async (req,res) => {
 //@route: GET /api/transactions
 const getTransactions = asyncHandler(async (req, res)=> {
     const data = await Transaction.find({user: req.user.id})
+    // const data = await Transaction.find({});
     res.json(data);
 })
 
 //@access: private
-//@route: POST /api/transactons
+//@route: POST /api/transactions
 const createTransaction= asyncHandler(async (req, res)=> {
 
   const {desc, type, amount} = req.body;
- 
-  if (!req.body){
-    res.status(400)
-    throw new Error('Invalid object body');
+
+  if (!desc || !type || !amount){
+    res.status(400);
+    throw new Error('Please provide all fields for the transation');
   }
+ 
+  // if (!req.body){
+  //   res.status(400)
+  //   throw new Error('Invalid object body');
+  // }
 
   const newTransaction = await Transaction.create({
     user: req.user.id,
     desc,
     type,
-    amount,
-    date: new Date()
+    amount
+    // date: new Date()
   })
 
    //successfully created
@@ -59,7 +64,7 @@ const createTransaction= asyncHandler(async (req, res)=> {
       desc: newTransaction.desc,
       type: newTransaction.type,
       amount: newTransaction.amount,
-      date: newTransaction.date
+      // date: newTransaction.date
     })
   }else{
     res.status(400)
@@ -87,8 +92,12 @@ const createTransaction= asyncHandler(async (req, res)=> {
 //@access: private
 //@route: DELETE /api/transactions
 const deleteTransaction = asyncHandler(async(req, res) => {  
+  // const {_id} = req.body;
 
-  if (!req.body) res.status(400).json({message: 'Request body not found'});
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0){
+    res.status(400);
+    throw new Error('Please provide a valid id')
+  }
 
   await Transaction.deleteOne(req.body, (err)=> {
       if (!err) res.json(`${req.body._id} deleted`);
@@ -113,8 +122,9 @@ const getLabels = asyncHandler(async (req, res) => {
       $unwind: "$categoriesInfo",
     },
   ]);
-  const filterData= data.map((exp)=> Object.assign({}, {id: exp._id, desc: exp.desc, type: exp.type, amount: exp.amount, color: exp.categoriesInfo["color"]}));
-  res.json(filterData);
+  const label= data.map((exp)=> Object.assign({}, {user: exp.user, id: exp._id, desc: exp.desc, type: exp.type, amount: exp.amount, color: exp.categoriesInfo["color"]}));
+  const userLabel = label.filter((data)=> data.user == req.user.id);
+  res.json(userLabel);
 
 })
 
